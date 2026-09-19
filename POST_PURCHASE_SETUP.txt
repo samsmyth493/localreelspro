@@ -1,0 +1,60 @@
+LOCALREELS PRO POST-PURCHASE SETUP
+
+PRIMARY ACCESS URL
+https://localreelspro.co.uk/?access=1&session_id={CHECKOUT_SESSION_ID}
+
+Set this as the Stripe Payment Link redirect after successful payment.
+
+IMPORTANT DEPLOYMENT
+Deploy the ENTIRE LocalReelsPro_Sales_Site folder, not index.html alone. The /api folder is required for payment verification and protected downloads.
+
+LOCALREELS PRO — POST-PURCHASE ACCESS SETUP
+
+1) Upload/deploy the entire LocalReelsPro_Sales_Site folder to Vercel.
+
+2) In Vercel > Project > Settings > Environment Variables, add:
+   STRIPE_SECRET_KEY = your CURRENT/ROTATED Stripe live secret key
+   Do not put this value in index.html or any public file.
+
+Optional stronger check:
+   STRIPE_PAYMENT_LINK_ID = the Stripe Payment Link ID (starts with plink_) for the £47 LocalReels payment link.
+   If supplied, the verification function will require the Checkout Session to come from that exact Payment Link.
+
+3) Redeploy after adding/changing environment variables.
+
+4) In Stripe Dashboard, open the £47 Payment Link, then its After Payment/confirmation settings. Set it to redirect customers to:
+   https://localreelspro.co.uk/?access=1&session_id={CHECKOUT_SESSION_ID}
+
+5) Make one low-risk test purchase/test-mode test before launch. Confirm:
+   - Stripe redirects to https://localreelspro.co.uk/?access=1&session_id=cs_...
+   - The access page says Payment verified.
+   - The complete ZIP downloads.
+   - The 200-Prompt Vault and Legal & Compliance Bonus open.
+   - A direct visit to /?access=1 without session_id does not reveal product links.
+
+FILES MADE AVAILABLE AFTER VERIFICATION
+- LocalReelsPro_Customer_Package.zip
+- START_HERE.txt
+- 20_Lesson_Product_Map.txt
+- LocalReels_200_Prompt_AI_Business_Vault.html
+- LocalReels_Customer_Licence.txt
+- Legal_Compliance_Bonus.html
+
+IMPORTANT
+This setup verifies the Stripe Checkout Session server-side before files are served. Keep STRIPE_SECRET_KEY only in Vercel Environment Variables.
+
+CUSTOMER CONTENT
+The protected portal now includes 20 individual HTML lesson files plus the 200-Prompt Vault, Legal & Compliance Bonus, Customer Licence and complete customer ZIP.
+
+PAYMENT LINK LOCATION IN index.html
+The Stripe Payment Link is kept in one clearly marked line near the bottom of index.html:
+   const LOCALREELS_PAYMENT_LINK = 'https://buy.stripe.com/aFa8wP26f7fE3Uk2kB2go00';
+To change the payment link later, replace only the URL between the quotes.
+Never paste an sk_live_ secret key into index.html.
+
+CUSTOMER ACCESS HELP ON SALES PAGE
+The payment section now includes an "Already paid? Access help" panel with:
+- instructions for returning from Stripe with the session_id
+- an Open purchase access link
+- hi@localreelspro.co.uk support contact
+- a warning that access cannot be verified without the Stripe session reference
